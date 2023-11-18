@@ -13,10 +13,10 @@ public class FetchJoke extends Hello {
     public static Random random;
     public static int randomJokeSetupAndPunchline;
     public static int status;
-    public static String link;
     public static StringBuilder response = new StringBuilder();
     public static ArrayList<String> listOfJokesSetups = new ArrayList<>();
     public static ArrayList<String> listOfJokesPunchlines = new ArrayList<>();
+    public static String link;
 
     protected static void fetchJoke() {
         try {
@@ -26,8 +26,8 @@ public class FetchJoke extends Hello {
 
             deleteRedundantChars();
 
-            getSetups(response, listOfJokesSetups);
-            getPunchline(response, listOfJokesPunchlines);
+            extractInfo(response, listOfJokesSetups, "setup");
+            extractInfo(response, listOfJokesPunchlines, "punchline");
 
             reader.close();
 
@@ -48,32 +48,16 @@ public class FetchJoke extends Hello {
         }
     }
 
-    private static void getSetups(StringBuilder response, ArrayList<String> listOfJokesSetups) {
-        String[] parts = response.toString().split("}");
+    private static void extractInfo(StringBuilder response, ArrayList<String> infoList, String key) {
+        String[] parts = response.toString().split(key.equals("setup") ? "}" : "\\{");
         for (String part : parts) {
-            if (part.contains("setup")) {
+            if (part.contains(key)) {
                 String[] fields = part.split(",");
                 for (String field : fields) {
-                    if (field.contains("setup")) {
-                        String[] setupArray = field.split(":");
-                        String setup = setupArray[1].replaceAll("\"", "").trim();
-                        listOfJokesSetups.add(setup);
-                    }
-                }
-            }
-        }
-    }
-
-    private static void getPunchline(StringBuilder response, ArrayList<String> listOfJokesPunchlines) {
-        String[] parts = response.toString().split("\\{");
-        for (String part : parts) {
-            if (part.contains("punchline")) {
-                String[] fields = part.split(",");
-                for (String field : fields) {
-                    if (field.contains("punchline")) {
-                        String[] punchlinesArray = field.split(":");
-                        String punchline = punchlinesArray[1].replaceAll("\"", "").trim();
-                        listOfJokesPunchlines.add(punchline);
+                    if (field.contains(key)) {
+                        String[] infoArray = field.split(":");
+                        String info = infoArray[1].replaceAll("\"", "").trim();
+                        infoList.add(info);
                     }
                 }
             }
