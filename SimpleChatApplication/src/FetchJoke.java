@@ -3,17 +3,19 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class FetchJoke extends Hello {
     public static HttpsURLConnection connection;
 
-    public static String fetchJoke() {
+    public static void fetchJoke() {
         BufferedReader reader;
         String line;
         StringBuilder response = new StringBuilder();
-        String joke = "";
+        ArrayList<String> listOfJokesSetups= new ArrayList<>();
+        ArrayList<String> listOfJokesPunchlines = new ArrayList<>();
         String link = "https://api.sampleapis.com/jokes/goodJokes";
-        String setup = "";
 
         try {
             URL url = new URL(link);
@@ -42,31 +44,56 @@ public class FetchJoke extends Hello {
                 }
             }
 
-            getTitle(response, setup);
-
-            //System.out.println(response);
+            getSetups(response, listOfJokesSetups);
+            getPunchline(response, listOfJokesPunchlines);
 
             reader.close();
+
+            Random random = new Random();
+
+            int randomJokeSetupAndPunchline = random.nextInt(listOfJokesPunchlines.size());
+
+            showResults(listOfJokesSetups, listOfJokesPunchlines, randomJokeSetupAndPunchline);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return joke;
     }
 
-    public static void getTitle(StringBuilder response, String setup) {
+    public static void getSetups(StringBuilder response, ArrayList<String> listOfJokesSetups) {
         String[] parts = response.toString().split("\\{");
         for (String part : parts) {
             if (part.contains("setup")) {
                 String[] fields = part.split(",");
                 for (String field : fields) {
                     if (field.contains("setup")) {
-                        String[] titleArray = field.split(":");
-                        setup = titleArray[1].replaceAll("\"", "").trim();
+                        String[] setupArray = field.split(":");
+                        String setup = setupArray[1].replaceAll("\"", "").trim();
+                        listOfJokesSetups.add(setup);
                     }
-                    //System.out.println("Setup is: " + setup);
                 }
             }
         }
+    }
+
+    public static void getPunchline(StringBuilder response, ArrayList<String> listOfJokesPunchlines){
+        String[] parts = response.toString().split("\\{");
+        for (String part : parts) {
+            if (part.contains("punchline")) {
+                String[] fields = part.split(",");
+                for (String field : fields) {
+                    if (field.contains("punchline")) {
+                        String[] punchlinesArray = field.split(":");
+                        String punchline = punchlinesArray[1].replaceAll("\"", "").trim();
+                        listOfJokesPunchlines.add(punchline);
+                    }
+                }
+            }
+        }
+    }
+
+    private static void showResults(ArrayList<String> listOfJokesSetups, ArrayList<String> listOfJokesPunchlines, int randomJokeSetupAndPunchline ){
+        System.out.println(listOfJokesSetups.get(randomJokeSetupAndPunchline));
+        System.out.println(listOfJokesPunchlines.get(randomJokeSetupAndPunchline));
     }
 }

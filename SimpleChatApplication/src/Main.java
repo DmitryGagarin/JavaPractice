@@ -1,23 +1,32 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Main extends FetchJoke {
+public class Main extends FetchQuote {
     public static void main(String[] args) {
 
-        //String joke = fetchJoke();
         showInstructions();
 
         Scanner scanner = new Scanner(System.in);
         String decision = "";
+        ArrayList<String> possibleVariants = new ArrayList<>();
+        possibleVariants.add("hello");
+        possibleVariants.add("joke");
+        possibleVariants.add("variants");
+        possibleVariants.add("exit");
+        possibleVariants.add("quote");
+        possibleVariants.add("weather");
 
         do {
             if (scanner.hasNextLine()) {
                 decision = scanner.nextLine();
-                if (decision.equals("hello") || decision.equals("joke") || decision.equals("variants") || decision.equals("exit")) {
+                if (possibleVariants.contains(decision)) {
                     switch (decision) {
-                        case "hello" -> callHello();
-                        case "joke" -> sayJoke();
-                        case "variants" -> showVariants();
+                        case "hello" -> getHello();
+                        case "joke" -> getJoke();
+                        case "variants" -> getVariants();
                         case "exit" -> exit();
+                        case "quote" -> getQuoteOfTheDay();
+                        case "weather" -> getWeather();
                         default -> System.out.println("Type mistake");
                     }
                 } else {
@@ -37,14 +46,10 @@ public class Main extends FetchJoke {
         System.out.println(ANSI_GREEN + "**************************");
         System.out.println("Welcome to Simple Chat App!");
         System.out.println("There are some instructions");
-        System.out.println("If you want to say hello to you, input 'hello'");
-        System.out.println("If you want to get a joke, input 'joke'");
-        System.out.println("If you want to see variants, input 'variants'");
-        System.out.println("If you want to exit, input 'exit'");
-        System.out.println("**************************" + ANSI_RESET);
+        getVariants();
     }
 
-    private static void showVariants() {
+    private static void getVariants() {
         System.out.println(ANSI_GREEN + "**************************");
         System.out.println("If you want to say hello to you, input 'hello'");
         System.out.println("If you want to get a joke, input 'joke'");
@@ -53,16 +58,24 @@ public class Main extends FetchJoke {
         System.out.println("**************************" + ANSI_RESET);
     }
 
-    private static void callHello() {
+    private static void getHello() {
         System.out.println(ANSI_GREEN + "**************************");
         sayHello();
         System.out.println("**************************" + ANSI_RESET);
     }
 
-    private static void sayJoke() {
-        System.out.println(ANSI_GREEN + "**************************");
-        System.out.println("Joke!");
+    private static void getJoke() {
+        System.out.println(ANSI_BLUE + "**************************");
+        fetchJoke();
         System.out.println("**************************" + ANSI_RESET);
+    }
+
+    private static void getQuoteOfTheDay(){
+
+    }
+
+    private static void getWeather(){
+
     }
 
     private static void exit() {
