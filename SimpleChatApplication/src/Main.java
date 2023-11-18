@@ -1,14 +1,14 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Main extends FetchQuote {
+public class Main extends FetchWeather {
+
+    public static Scanner scanner = new Scanner(System.in);
+    public static String decision = "";
+    public static ArrayList<String> possibleVariants = new ArrayList<>();
+
     public static void main(String[] args) {
 
-        showInstructions();
-
-        Scanner scanner = new Scanner(System.in);
-        String decision = "";
-        ArrayList<String> possibleVariants = new ArrayList<>();
         possibleVariants.add("hello");
         possibleVariants.add("joke");
         possibleVariants.add("variants");
@@ -16,6 +16,12 @@ public class Main extends FetchQuote {
         possibleVariants.add("quote");
         possibleVariants.add("weather");
 
+        showInstructions();
+
+        checkInputAndShowResult();
+    }
+
+    private static void checkInputAndShowResult() {
         do {
             if (scanner.hasNextLine()) {
                 decision = scanner.nextLine();
@@ -54,6 +60,8 @@ public class Main extends FetchQuote {
         System.out.println("If you want to say hello to you, input 'hello'");
         System.out.println("If you want to get a joke, input 'joke'");
         System.out.println("If you want to see variants, input 'variants'");
+        System.out.println("If you want to see a quote, input 'quote'");
+        System.out.println("If you want to check a weather, input 'weather'");
         System.out.println("If you want to exit, input 'exit'");
         System.out.println("**************************" + ANSI_RESET);
     }
@@ -70,12 +78,16 @@ public class Main extends FetchQuote {
         System.out.println("**************************" + ANSI_RESET);
     }
 
-    private static void getQuoteOfTheDay(){
-
+    private static void getQuoteOfTheDay() {
+        System.out.println(ANSI_BLUE + "**************************");
+        fetchQuote();
+        System.out.println("**************************" + ANSI_RESET);
     }
 
-    private static void getWeather(){
-
+    private static void getWeather() {
+        System.out.println(ANSI_BLUE + "**************************");
+        fetchWeather();
+        System.out.println("**************************" + ANSI_RESET);
     }
 
     private static void exit() {

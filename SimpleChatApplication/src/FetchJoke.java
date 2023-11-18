@@ -8,60 +8,48 @@ import java.util.Random;
 
 public class FetchJoke extends Hello {
     public static HttpsURLConnection connection;
+    public static BufferedReader reader;
+    public static String line;
+    public static Random random;
+    public static int randomJokeSetupAndPunchline;
+    public static int status;
+    public static String link;
+    public static StringBuilder response = new StringBuilder();
+    public static ArrayList<String> listOfJokesSetups = new ArrayList<>();
+    public static ArrayList<String> listOfJokesPunchlines = new ArrayList<>();
 
-    public static void fetchJoke() {
-        BufferedReader reader;
-        String line;
-        StringBuilder response = new StringBuilder();
-        ArrayList<String> listOfJokesSetups= new ArrayList<>();
-        ArrayList<String> listOfJokesPunchlines = new ArrayList<>();
-        String link = "https://api.sampleapis.com/jokes/goodJokes";
-
+    protected static void fetchJoke() {
         try {
-            URL url = new URL(link);
-            connection = (HttpsURLConnection) url.openConnection();
+            connectionSettings();
 
-            connection.setRequestMethod("GET");
-            connection.setConnectTimeout(5000);
-            connection.setReadTimeout(5000);
+            getStatus();
 
-            int status = connection.getResponseCode();
-            System.out.println("Connection status: " + status);
-
-            if (status > 299) {
-                reader = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
-            } else {
-                reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            }
-            while ((line = reader.readLine()) != null) {
-                response.append(line);
-            }
-
-            for (int i = 0; i < response.length(); i++) {
-                char currentChar = response.charAt(i);
-                if (currentChar == '}' || currentChar == '{' || currentChar == '[' || currentChar == ']') {
-                    response.setCharAt(i, '\n');
-                }
-            }
+            deleteRedundantChars();
 
             getSetups(response, listOfJokesSetups);
             getPunchline(response, listOfJokesPunchlines);
 
             reader.close();
 
-            Random random = new Random();
-
-            int randomJokeSetupAndPunchline = random.nextInt(listOfJokesPunchlines.size());
+            generateRandom();
 
             showResults(listOfJokesSetups, listOfJokesPunchlines, randomJokeSetupAndPunchline);
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void getSetups(StringBuilder response, ArrayList<String> listOfJokesSetups) {
-        String[] parts = response.toString().split("\\{");
+    private static void deleteRedundantChars() {
+        for (int i = 0; i < response.length(); i++) {
+            char currentChar = response.charAt(i);
+            if (currentChar == '}' || currentChar == '{' || currentChar == '[' || currentChar == ']') {
+                response.setCharAt(i, '\n');
+            }
+        }
+    }
+
+    private static void getSetups(StringBuilder response, ArrayList<String> listOfJokesSetups) {
+        String[] parts = response.toString().split("}");
         for (String part : parts) {
             if (part.contains("setup")) {
                 String[] fields = part.split(",");
@@ -76,7 +64,7 @@ public class FetchJoke extends Hello {
         }
     }
 
-    public static void getPunchline(StringBuilder response, ArrayList<String> listOfJokesPunchlines){
+    private static void getPunchline(StringBuilder response, ArrayList<String> listOfJokesPunchlines) {
         String[] parts = response.toString().split("\\{");
         for (String part : parts) {
             if (part.contains("punchline")) {
@@ -92,8 +80,45 @@ public class FetchJoke extends Hello {
         }
     }
 
-    private static void showResults(ArrayList<String> listOfJokesSetups, ArrayList<String> listOfJokesPunchlines, int randomJokeSetupAndPunchline ){
+    private static void showResults(ArrayList<String> listOfJokesSetups, ArrayList<String> listOfJokesPunchlines, int randomJokeSetupAndPunchline) {
         System.out.println(listOfJokesSetups.get(randomJokeSetupAndPunchline));
-        System.out.println(listOfJokesPunchlines.get(randomJokeSetupAndPunchline));
+        System.out.println(listOfJokesPunchlines.get(randomJokeSetupAndPunchline + 1));
+    }
+
+    private static void getStatus() {
+        try {
+            status = connection.getResponseCode();
+            if (status != 200) {
+                System.out.println("Connection status: " + status);
+            }
+            if (status > 299) {
+                reader = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
+            } else {
+                reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            }
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void connectionSettings() {
+        try {
+            link = "https://api.sampleapis.com/jokes/goodJokes";
+            URL url = new URL(link);
+            connection = (HttpsURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setConnectTimeout(5000);
+            connection.setReadTimeout(5000);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void generateRandom() {
+        random = new Random();
+        randomJokeSetupAndPunchline = random.nextInt(listOfJokesPunchlines.size());
     }
 }

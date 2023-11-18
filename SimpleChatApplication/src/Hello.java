@@ -1,5 +1,5 @@
 public class Hello extends Utils {
-    public static void sayHello(){
+    protected static void sayHello(){
         System.out.println("""
                 ╔┓┏╦━━╦┓╔┓╔━━╗
                 ║┗┛║┗━╣┃║┃║╯╰║
