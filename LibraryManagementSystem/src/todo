@@ -1,0 +1,17 @@
+Library Management System
+
+Classes:
+
+*Book: Represents a book with attributes like title, author, publication year, etc.
+*Library: Manages a collection of books.
+*Main: Contains the main method to run the application.
+
+Features:
+
+1) Add Books to Library: Create a method to add books to the library.
+2) Display Books: Show all the books in the library.
+3) Search Books by Author/Title: Use lambda functions to filter books by author or title.
+4) Update Book Information: Allow updating book details.
+5) Remove Books: Remove books from the library.
+6) Count Books: Count the total number of books available.
+7) Additional Functionality: You can add additional features like sorting books by title or author using lambda functions.
