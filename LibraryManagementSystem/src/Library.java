@@ -28,7 +28,7 @@ public class Library {
 
     protected static void displayBooks() {
         System.out.println("-----------------------");
-        System.out.println("List of books");
+        System.out.println("Book added");
         for (Book<String, String, Integer> book : books) {
             System.out.println("-----------------------");
             System.out.println("Title: " + book.getTitle());
@@ -61,7 +61,7 @@ public class Library {
                     .append(newBook.getAuthor())
                     .append(", Publishing year: ")
                     .append(newBook.getPublishingYear().toString())
-                    .append("\n");
+                    .append(",\n");
 
             writer.close();
         } catch (IOException e) {
@@ -73,9 +73,11 @@ public class Library {
     protected static void readFromFile(String path) {
         try {
             List<String> db = Files.readAllLines(Paths.get(path));
+            System.out.println("-----------------------");
             for (String line : db) {
                 System.out.println(line);
             }
+            System.out.println("-----------------------");
         } catch (IOException e) {
             System.out.println("Wrong file path");
             e.printStackTrace();

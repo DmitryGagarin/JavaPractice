@@ -1,6 +1,10 @@
-
-Title: book1, Author: aytho1, Publishing year: 1
-Title: title1, Author: aut1, Publishing year: 1
-Title: title2, Author: 2, Publishing year: 2
-Title: 22, Author: 2, Publishing year: 2
-Title: new, Author: new, Publishing year: 1
+Title: The Great Gatsby, Author: F. Scott Fitzgerald, Publishing year: 1925,
+Title: To Kill a Mockingbird, Author: Harper Lee, Publishing year: 1960,
+Title: 1984, Author: George Orwell, Publishing year: 1949,
+Title: The Catcher in the Rye, Author: J.D. Salinger, Publishing year: 1951,
+Title: Pride and Prejudice, Author: Jane Austen, Publishing year: 1813,
+Title: Harry Potter and the Sorcerer's Stone, Author: J.K. Rowling, Publishing year: 1997,
+Title: The Hobbit, Author: J.R.R. Tolkien, Publishing year: 1937,
+Title: The Lord of the Rings, Author: J.R.R. Tolkien, Publishing year: 1954,
+Title: Moby-Dick, Author: Herman Melville, Publishing year: 1851,
+Title: War and Peace, Author: Leo Tolstoy, Publishing year: 1869,
