@@ -30,7 +30,8 @@ public class Book<T, U, V> extends Library implements Serializable {
         this.publishingYear = publishingYear;
     }
 
-    public Book() {}
+    public Book() {
+    }
 
     public Book(T title) {
         this.title = title;
