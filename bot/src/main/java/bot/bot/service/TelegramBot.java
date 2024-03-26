@@ -1,8 +1,10 @@
 package bot.bot.service;
 
 import bot.bot.config.BotConfig;
+import bot.bot.model.Joke;
+import bot.bot.model.Repository.JokeRepository;
 import bot.bot.model.User;
-import bot.bot.model.UserRepository;
+import bot.bot.model.Repository.UserRepository;
 
 import com.vdurmont.emoji.EmojiParser;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +30,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @Slf4j
@@ -35,6 +38,9 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    JokeRepository jokeRepository;
 
     final BotConfig config;
 
@@ -51,6 +57,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         listOfCommands.add(new BotCommand("/help", "i need help!"));
         listOfCommands.add(new BotCommand("/settings", "settings"));
         listOfCommands.add(new BotCommand("/register", "registration"));
+        listOfCommands.add(new BotCommand("/joke", "get a free joke"));
         try {
             this.execute(new SetMyCommands(listOfCommands, new BotCommandScopeDefault(), null));
         } catch (TelegramApiException e) {
@@ -86,6 +93,7 @@ public class TelegramBot extends TelegramLongPollingBot {
                 case "/help" -> sendMessage(chatId, HELP_TEXT);
                 case "/settings" -> settingsCommandReceived(chatId, update.getMessage().getChat().getFirstName());
                 case "/register" -> register(chatId);
+                case "/joke" -> getAllJokes(chatId);
                 default -> sendMessage(chatId, "Command not found");
             }
         } else if (update.hasCallbackQuery()) {
@@ -94,8 +102,7 @@ public class TelegramBot extends TelegramLongPollingBot {
             long chatId = update.getCallbackQuery().getMessage().getChatId();
             if (callbackData.equals("YES_BUTTON")) {
                 registrationYesCallback(chatId, messageId);
-            }
-            else if (callbackData.equals("NO_BUTTON")) {
+            } else if (callbackData.equals("NO_BUTTON")) {
                 registrationNoCallback(chatId, messageId);
             }
         }
@@ -201,7 +208,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         KeyboardRow row = new KeyboardRow();
         row.add("weather");
-        row.add("get random joke");
+        row.add("/joke");
 
         keyboardRows.add(row);
 
@@ -242,5 +249,20 @@ public class TelegramBot extends TelegramLongPollingBot {
     public void settingsCommandReceived(long chatId, String firstName) {
         String response = firstName + " now, you are in settings";
         sendMessage(chatId, response);
+    }
+
+    private void getAllJokes(long chatId) {
+        long id = jokeRepository.count();
+        String response;
+        String finalResponse = "";
+        for (long i = 0; i < id; i++) {
+            Optional<Joke> jokeOptional = jokeRepository.findById(i);
+            if (jokeOptional.isPresent()) {
+                Joke joke = jokeOptional.get();
+                response = joke.getId() + " " + joke.getText() + " " + joke.getTopic() + "\n";
+                finalResponse += response;
+            }
+        }
+        sendMessage(chatId, finalResponse);
     }
 }
