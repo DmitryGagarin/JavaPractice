@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+
+<body>
+<h1 th:text="${message}"></h1>
+
+<div>
+    <label> Id:
+        <a th:text="${id}"></a>
+    </label>
+</div>
+
+<div>
+    <label> First Name:
+        <a th:text="${first_name}"></a>
+    </label>
+</div>
+
+<div>
+    <label> Second Name:
+        <a th:text="${second_name}"></a>
+    </label>
+</div>
+
+<div>
+    <label> Gender:
+        <a th:text="${gender}"></a>
+    </label>
+</div>
+
+<div>
+    <label> Status:
+        <a th:text="${status}"></a>
+    </label>
+</div>
+
+<div>
+    <label> Username:
+        <a th:text="${username}"></a>
+    </label>
+</div>
+</body>
+</html>

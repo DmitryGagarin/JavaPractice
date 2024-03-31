@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+
+<h1> DATA </h1>
+<form th:action="@{/data/1}" method="get">
+    <input type="submit" value="1">
+</form>
+<form th:action="@{/data/2}" method="get">
+    <input type="submit" value="2">
+</form>
+<form th:action="@{/data/3}" method="get">
+    <input type="submit" value="3">
+</form>
+
+</body>
+</html>
