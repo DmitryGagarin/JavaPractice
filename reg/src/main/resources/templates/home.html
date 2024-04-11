@@ -1,17 +1,15 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="ISO-8859-1">
-    <title>Welcome to CodeJava Home</title>
-    <link rel="stylesheet" type="style/style.css"/>
-
+    <title th:text="@{title}"></title>
+    <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
-<div class="container text-center">
-    <h1>Welcome to CodeJava.net</h1>
-    <h3><a th:href="/@{/users}">List of Users</a></h3>
-    <h3><a th:href="/@{/registration}">Register</a></h3>
-    <h3><a th:href="/@{/login}">Login</a></h3>
+<div>
+        <h1>Welcome to CodeJava.net</h1>
+        <h3><a th:href="@{/users}">List of Users</a></h3>
+        <h3><a th:href="@{/registration}">Register</a></h3>
+        <h3><a th:href="@{/login}">Login</a></h3>
 </div>
 
 </body>

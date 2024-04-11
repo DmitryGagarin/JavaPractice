@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="@{title}"></title>
+</head>
+<body>
+
+<div class="wrapper">
+    <form th:action="@{/process_message}" th:object="${message}"
+          method="post" style="max-width: 600px; margin: 0 auto;">
+        <label>
+            <input type="text" th:field="*{content}" class="form-control" placeholder="Message" required/>
+        </label>
+        <label>
+            <input type="text" th:field="*{name}" class="form-control" placeholder="Name"
+                   required minlength="2" maxlength="20"/>
+        </label>
+        <div>
+            <button type="submit" class="btn btn-primary">Send Message</button>
+        </div>
+    </form>
+    <div>
+        <a th:href="@{/users}"> Click to return home </a>
+    </div>
+</div>
+
+
+</body>
+</html>

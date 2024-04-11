@@ -1,17 +1,15 @@
 package registration.example.reg.model.entity;
 
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
+@AllArgsConstructor
 public class CustomUserDetails implements UserDetails {
 
     private User user;
-
-    public CustomUserDetails(User user) {
-        this.user = user;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -47,9 +45,4 @@ public class CustomUserDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
-    public String getFullName() {
-        return user.getFirstName() + " " + user.getLastName();
-    }
-
 }
