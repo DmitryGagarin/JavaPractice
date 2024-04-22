@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title th:text="@{title}"></title>
+</head>
+<body>
+<h1>Stouts Beers Data</h1>
+<h3><a th:href="@{/home}">Return home</a></h3>
+<div th:each="beer : ${beers}">
+    <p><b><i>Name:</i></b> <span th:text="${beer.name}"></span></p>
+    <p><b><i>Rating:</i></b> <span th:text="${beer.rating}"></span></p>
+    <p><b><i>Price:</i></b> <span th:text="${beer.price}"></span></p> <br>
+</div>
+</body>
+</html>

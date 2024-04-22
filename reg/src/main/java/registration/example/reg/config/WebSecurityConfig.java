@@ -1,5 +1,6 @@
 package registration.example.reg.config;
 
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -8,8 +9,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import registration.example.reg.model.entity.CustomUserDetailsService;
+import registration.example.reg.model.service.CustomUserDetailsService;
 
+@EnableAutoConfiguration
 @Configuration
 public class WebSecurityConfig   {
 
