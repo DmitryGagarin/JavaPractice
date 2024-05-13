@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/styles.css"/>
+    <title th:text="${title}"></title>
+</head>
+<body>
+
+<div th:insert="~{blocks/nav-block :: navigation}"></div>
+
+<div class="users-menu">
+    <div class="users-menu-header">
+        Add users <span class="arrow">▼</span>
+    </div>
+    <div class="users-menu-options">
+        <form method="post" th:action="@{/add_user}" th:object="${user}">
+            <label>Insert user's name</label> <br>
+            <input type="text" name="name" th:field="*{name}">
+            <br>
+            <label>Insert user's email</label> <br>
+            <input type="text" name="email" th:field="*{email}">
+            <br>
+            <label>Create user</label>
+            <input type="submit" value="Create user">
+        </form>
+    </div>
+</div>
+
+<div class="users-menu">
+    <div class="users-menu-header">
+        See all users <span class="arrow">▼</span>
+    </div>
+    <div class="users-menu-options">
+        <a href="#">Option 1</a>
+        <a href="#">Option 2</a>
+        <a href="#">Option 3</a>
+    </div>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
