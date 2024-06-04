@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Currency Title</title>
+</head>
+<body>
+<h1>Currency Conversion</h1>
+
+<div>
+  <form th:action="@{/process_users_update}"
+        th:method="PATCH">
+    <label>
+      <input type="text" name="id" placeholder="id">
+    </label>
+    <div>
+      <label> id
+        <input type="radio" name="choice" value="id_field">
+      </label>
+      <label> first name
+        <input type="radio" name="choice" value="firstName">
+      </label>
+      <label> second name
+        <input type="radio" name="choice" value="secondName">
+      </label>
+      <label> username
+        <input type="radio" name="choice" value="username">
+      </label>
+      <label> password
+        <input type="radio" name="choice" value="password">
+      </label>
+    </div>
+    <label> new
+      <input type="text" name="changed">
+    </label>
+    <div>
+      <button type="submit">Update field</button>
+    </div>
+  </form>
+</div>
+
+<div class="output">
+From: <span th:text="${calculations.from}"></span><br>
+To: <span th:text="${calculations.to}"></span><br>
+Conversion Multiple: <span th:text="${calculations.conversionMultiple}"></span><br>
+Quantity: <span th:text="${calculations.quantity}"></span><br>
+Total: <span th:text="${calculations.totalAmount}"></span><br>
+Port: <span th:text="${calculations.port}"></span><br>
+</div>
+</body>
+</html>
